@@ -43,7 +43,7 @@ Website manajemen laundry profesional menggunakan **Next.js 15**, **TypeScript**
 
 ```bash
 # Clone atau masuk ke folder
-cd website-viplaundry-nextjs
+cd website-viplaundry
 
 # Install dependencies
 npm install
@@ -103,7 +103,7 @@ Sekarang user bisa **memilih jenis akun** saat register:
 ## 📁 Structure Project
 
 ```
-website-viplaundry-nextjs/
+website-viplaundry/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── layout.tsx          # Root layout
