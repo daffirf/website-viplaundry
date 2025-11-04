@@ -1,0 +1,45 @@
+{
+  "name": "laundrypro-management-system",
+  "version": "1.0.0",
+  "description": "Aplikasi manajemen laundry berbasis website yang modern dan responsif",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "laundry",
+    "management",
+    "system",
+    "webapp",
+    "javascript",
+    "html5",
+    "css3",
+    "responsive",
+    "dashboard",
+    "business"
+  ],
+  "author": "LaundryPro Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/laundrypro-management-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/laundrypro-management-system/issues"
+  },
+  "homepage": "https://github.com/yourusername/laundrypro-management-system#readme",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

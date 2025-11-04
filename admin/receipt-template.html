@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struk Pesanan LaundryPro</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 20px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .receipt {
+            max-width: 300px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .store-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .store-info {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .order-details {
+            margin-bottom: 15px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+        }
+        
+        .service-details {
+            border-top: 1px dashed #ccc;
+            border-bottom: 1px dashed #ccc;
+            padding: 10px 0;
+            margin: 15px 0;
+        }
+        
+        .total {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .print-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .print-button:hover {
+            background: #0056b3;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #d1ecf1; color: #0c5460; }
+        .status-ready { background: #d4edda; color: #155724; }
+        .status-completed { background: #c3e6cb; color: #155724; }
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <div class="header">
+            <div class="store-name">LAUNDRYPRO</div>
+            <div class="store-info">
+                Jl. Sudirman No. 123, Jakarta Selatan<br>
+                Telp: 021-1234567<br>
+                Email: info@laundrypro.com
+            </div>
+        </div>
+        
+        <div class="order-details">
+            <div class="detail-row">
+                <span class="detail-label">No. Pesanan:</span>
+                <span id="order-id">#001</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Tanggal:</span>
+                <span id="order-date">16 Jan 2024</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status:</span>
+                <span id="order-status">Pending</span>
+            </div>
+        </div>
+        
+        <div class="service-details">
+            <div class="detail-row">
+                <span class="detail-label">Pelanggan:</span>
+                <span id="customer-name">Ahmad Rizki</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Layanan:</span>
+                <span id="service-name">Cuci Reguler</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Berat:</span>
+                <span id="order-weight">3.5 kg</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Estimasi Selesai:</span>
+                <span id="estimated-finish">17 Jan 2024</span>
+            </div>
+        </div>
+        
+        <div class="total">
+            <div class="detail-row">
+                <span>Total Bayar:</span>
+                <span id="total-price">Rp 28.000</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Terima kasih telah mempercayakan laundry Anda kepada kami</p>
+            <p>Simpan struk ini untuk pengambilan</p>
+            <p>Jam Operasional: 07:00 - 22:00</p>
+        </div>
+    </div>
+    
+    <button class="print-button no-print" onclick="window.print()">
+        🖨️ Print Struk
+    </button>
+    
+    <script>
+        // Fungsi untuk mengisi data receipt
+        function fillReceipt(orderData) {
+            document.getElementById('order-id').textContent = `#${orderData.id.toString().padStart(3, '0')}`;
+            document.getElementById('order-date').textContent = formatDate(orderData.orderDate);
+            document.getElementById('order-status').textContent = getStatusText(orderData.status);
+            document.getElementById('customer-name').textContent = orderData.customerName;
+            document.getElementById('service-name').textContent = orderData.serviceName;
+            document.getElementById('order-weight').textContent = `${orderData.weight} kg`;
+            document.getElementById('estimated-finish').textContent = formatDate(orderData.estimatedFinish);
+            document.getElementById('total-price').textContent = `Rp ${orderData.totalPrice.toLocaleString()}`;
+            
+            // Update status badge
+            const statusElement = document.getElementById('order-status');
+            statusElement.className = `status-badge status-${orderData.status}`;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Pending',
+                'processing': 'Dalam Proses',
+                'ready': 'Siap Diambil',
+                'completed': 'Selesai'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // Jika ada data order di URL parameter, isi receipt
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderData = urlParams.get('orderData');
+        
+        if (orderData) {
+            try {
+                const order = JSON.parse(decodeURIComponent(orderData));
+                fillReceipt(order);
+            } catch (e) {
+                console.error('Error parsing order data:', e);
+            }
+        }
+    </script>
+</body>
+</html>
